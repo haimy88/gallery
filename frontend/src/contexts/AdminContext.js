@@ -18,6 +18,7 @@ export function AdminContextProvider({ children }) {
           newUser
         );
         console.log(res);
+        return res.data;
       }
     } catch (err) {
       return { error: err };
@@ -30,7 +31,7 @@ export function AdminContextProvider({ children }) {
         "http://localhost:8080/admin/edit",
         editedUser
       );
-      console.log(res);
+      return res.data;
     } catch (err) {
       return { error: err };
     }
@@ -42,6 +43,7 @@ export function AdminContextProvider({ children }) {
         `http://localhost:8080/admin/delete/${id}`
       );
       console.log(res);
+      return res.data;
     } catch (err) {
       return { error: err };
     }

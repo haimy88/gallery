@@ -61,10 +61,10 @@ export default function AdminTable() {
     });
   };
 
-  const handleDeleteUser = (user) => {
+  const handleDeleteUser = async (user) => {
     console.log(user);
-    deleteUser(user._id);
-    // window.location.reload(true);
+    await deleteUser(user._id);
+    collectUsersAdmin();
   };
 
   const openInPopup = (item) => {
@@ -149,11 +149,7 @@ export default function AdminTable() {
           <TblPagination />
         </Paper>
       </Box>
-      <Popup
-        openPopup={openPopup}
-        setOpenPopup={setOpenPopup}
-        title={existingUser ? "Edit User" : "Add New User"}
-      >
+      <Popup openPopup={openPopup} setOpenPopup={setOpenPopup}>
         {" "}
         <AddUser existingUser={existingUser} setOpenPopup={setOpenPopup} />
       </Popup>

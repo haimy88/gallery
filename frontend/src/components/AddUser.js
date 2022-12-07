@@ -1,22 +1,30 @@
 import * as React from "react";
+import { useState, useEffect } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
+import { Alert } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useAdminContext } from "../contexts/AdminContext";
+import PersonIcon from "@mui/icons-material/Person";
 
 const theme = createTheme();
 
 export default function AddUser({ existingUser }) {
   const { addUser, editUser } = useAdminContext();
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState();
+  const [success, setSuccess] = useState();
 
-  const handleSubmit = (event) => {
+  useEffect(() => console.log(isLoading), [isLoading]);
+
+  const handleSubmit = async (event) => {
+    setIsLoading(true);
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const user = {
@@ -33,7 +41,14 @@ export default function AddUser({ existingUser }) {
         delete user[key];
       }
     });
-    existingUser ? editUser(user) : addUser(user);
+    if (existingUser) {
+      const message = await editUser(user);
+      message.error ? setError(message.error.message) : setSuccess(message);
+    } else {
+      const res = await addUser(user);
+      res.error ? setError(res.error.message) : setSuccess(res);
+    }
+    setIsLoading(false);
   };
 
   return (
@@ -48,7 +63,7 @@ export default function AddUser({ existingUser }) {
           }}
         >
           <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-            <LockOutlinedIcon />
+            <PersonIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
             {existingUser ? "Edit User" : "Add User"}
@@ -136,9 +151,12 @@ export default function AddUser({ existingUser }) {
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
+              disabled={isLoading}
             >
               {existingUser ? "Edit User" : "Add User"}
             </Button>
+            {success && <Alert severity="success">{success}</Alert>}
+            {error && <Alert severity="error">{error}</Alert>}
           </Box>
         </Box>
       </Container>
