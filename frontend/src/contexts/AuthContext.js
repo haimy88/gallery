@@ -35,10 +35,8 @@ export function AuthContextProvider({ children }) {
   const collectUsers = async () => {
     try {
       const userData = await axios.get("http://localhost:8080/auth/allusers");
-      console.log(userData);
       if (userData) {
         setAllUsers(userData.data);
-        console.log(userData);
       }
     } catch (err) {
       return { error: err };

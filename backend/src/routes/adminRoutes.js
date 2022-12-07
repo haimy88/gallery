@@ -30,4 +30,6 @@ router.put(
 
 router.delete("/delete/:id", AdminController.deleteUser);
 
+router.get("/users", AdminController.getAllUsersAdmin);
+
 module.exports = router;

@@ -4,6 +4,7 @@ const {
   addUserModel,
   editUserModel,
   deleteUserModel,
+  getAllUsersAdminModel,
 } = require("../models/adminModel");
 require("dotenv").config();
 
@@ -33,6 +34,7 @@ async function editUser(req, res) {
 
 async function deleteUser(req, res) {
   try {
+    console.log(req.params);
     const deleted = deleteUserModel(req.params.id);
     if (deleted.error) {
       throw new Error(deleted.error);
@@ -43,8 +45,18 @@ async function deleteUser(req, res) {
   }
 }
 
+const getAllUsersAdmin = async (req, res) => {
+  try {
+    const users = await getAllUsersAdminModel();
+    res.status(200).send(users);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+};
+
 module.exports = {
   addUser,
   editUser,
   deleteUser,
+  getAllUsersAdmin,
 };

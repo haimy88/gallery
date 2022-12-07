@@ -8,6 +8,8 @@ export function useAdminContext() {
 }
 
 export function AdminContextProvider({ children }) {
+  const [allUsersAdmin, setAllUsersAdmin] = useState([]);
+
   const addUser = async (newUser) => {
     try {
       {
@@ -45,8 +47,28 @@ export function AdminContextProvider({ children }) {
     }
   };
 
+  const collectUsersAdmin = async (id) => {
+    try {
+      const userData = await axios.get("http://localhost:8080/admin/users");
+      if (userData) {
+        setAllUsersAdmin(userData.data);
+      }
+    } catch (err) {
+      return { error: err };
+    }
+  };
+
   return (
-    <AdminContext.Provider value={{ addUser, editUser, deleteUser }}>
+    <AdminContext.Provider
+      value={{
+        addUser,
+        editUser,
+        deleteUser,
+        collectUsersAdmin,
+        allUsersAdmin,
+        setAllUsersAdmin,
+      }}
+    >
       {children}
     </AdminContext.Provider>
   );

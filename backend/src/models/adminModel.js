@@ -45,6 +45,26 @@ const getUserByEmail = async (email) => {
   }
 };
 
+const getAllUsersAdminModel = async () => {
+  try {
+    const users = await User.find();
+    const displayUsers = users.map((item) => {
+      const displayedUser = {
+        firstName: item.firstName,
+        lastName: item.lastName,
+        description: item.description,
+        email: item.email,
+        _id: item._id,
+      };
+      return displayedUser;
+    });
+    console.log(displayUsers);
+    return displayUsers;
+  } catch (err) {
+    return { error: err };
+  }
+};
+
 const getUserById = async (id) => {
   try {
     const queryResult = await User.findById(id);
@@ -58,6 +78,7 @@ module.exports = {
   addUserModel,
   editUserModel,
   deleteUserModel,
+  getAllUsersAdminModel,
   getUserByEmail,
   getUserById,
 };

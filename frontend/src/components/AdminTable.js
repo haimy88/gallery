@@ -17,7 +17,6 @@ import SearchIcon from "@mui/icons-material/Search";
 import CloseIcon from "@mui/icons-material/Close";
 import EditOutlinedIcon from "@mui/icons-material/Edit";
 import AddIcon from "@mui/icons-material/Add";
-import { useAuthContext } from "../contexts/AuthContext";
 import { useAdminContext } from "../contexts/AdminContext";
 import Popup from "./Popup";
 import AddUser from "../components/AddUser";
@@ -31,7 +30,6 @@ const headCells = [
 ];
 
 export default function AdminTable() {
-  const { allUsers, setAllUsers, collectUsers } = useAuthContext();
   const [openPopup, setOpenPopup] = useState(false);
   const [existingUser, setExistingUser] = useState(null);
   const [filterFn, setFilterFn] = useState({
@@ -39,14 +37,14 @@ export default function AdminTable() {
       return items;
     },
   });
+  const { deleteUser, allUsersAdmin, setAllUsersAdmin, collectUsersAdmin } =
+    useAdminContext();
 
-  useEffect(() => collectUsers, []);
-
-  const { deleteUser } = useAdminContext();
+  useEffect(() => collectUsersAdmin, []);
 
   const { TblContainer, TblHead, TblPagination, petsAfterPagingAndSorting } =
-    UseTable(allUsers, headCells, filterFn);
-  useEffect(() => setAllUsers(allUsers));
+    UseTable(allUsersAdmin, headCells, filterFn);
+  useEffect(() => setAllUsersAdmin(allUsersAdmin));
 
   const handleSearch = (e) => {
     let target = e.target;
@@ -64,6 +62,7 @@ export default function AdminTable() {
   };
 
   const handleDeleteUser = (user) => {
+    console.log(user);
     deleteUser(user._id);
     // window.location.reload(true);
   };
