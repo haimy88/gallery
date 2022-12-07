@@ -1,6 +1,10 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const { addUserModel, editUserModel } = require("../models/adminModel");
+const {
+  addUserModel,
+  editUserModel,
+  deleteUserModel,
+} = require("../models/adminModel");
 require("dotenv").config();
 
 async function addUser(req, res) {
@@ -27,7 +31,20 @@ async function editUser(req, res) {
   }
 }
 
+async function deleteUser(req, res) {
+  try {
+    const deleted = deleteUserModel(req.params.id);
+    if (deleted.error) {
+      throw new Error(deleted.error);
+    }
+    res.status(200).send("User deleted successfully");
+  } catch (err) {
+    res.status(500).send(err);
+  }
+}
+
 module.exports = {
   addUser,
   editUser,
+  deleteUser,
 };

@@ -22,10 +22,12 @@ router.post(
 
 router.put(
   "/edit",
-  // validateEmail,
+  validateEmail,
   passwordsMatch,
   encryptPassword,
   AdminController.editUser
 );
+
+router.delete("/delete/:id", AdminController.deleteUser);
 
 module.exports = router;

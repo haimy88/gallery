@@ -18,9 +18,9 @@ import CloseIcon from "@mui/icons-material/Close";
 import EditOutlinedIcon from "@mui/icons-material/Edit";
 import AddIcon from "@mui/icons-material/Add";
 import { useAuthContext } from "../contexts/AuthContext";
+import { useAdminContext } from "../contexts/AdminContext";
 import Popup from "./Popup";
 import AddUser from "../components/AddUser";
-// import PetForm from "./PetForm";
 
 const headCells = [
   { id: "first_name", label: "First Name" },
@@ -42,7 +42,7 @@ export default function AdminTable() {
 
   useEffect(() => collectUsers, []);
 
-  // const { deletePet } = usePetContext();
+  const { deleteUser } = useAdminContext();
 
   const { TblContainer, TblHead, TblPagination, petsAfterPagingAndSorting } =
     UseTable(allUsers, headCells, filterFn);
@@ -63,8 +63,8 @@ export default function AdminTable() {
     });
   };
 
-  const handleDeleteUser = async (user) => {
-    // await deletePet(pet);
+  const handleDeleteUser = (user) => {
+    deleteUser(user._id);
     // window.location.reload(true);
   };
 
@@ -120,8 +120,8 @@ export default function AdminTable() {
           <TblContainer>
             <TblHead />
             <TableBody>
-              {petsAfterPagingAndSorting().map((item) => (
-                <TableRow key={item.id}>
+              {petsAfterPagingAndSorting().map((item, index) => (
+                <TableRow key={index}>
                   <TableCell>{item.firstName}</TableCell>
                   <TableCell>{item.lastName}</TableCell>
                   <TableCell>{item.email}</TableCell>

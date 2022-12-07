@@ -1,6 +1,6 @@
 const { User } = require("../data/dbschemas");
 
-function addUserModel(newUser) {
+const addUserModel = (newUser) => {
   try {
     const user = new User({
       firstName: newUser.firstName,
@@ -15,40 +15,49 @@ function addUserModel(newUser) {
   } catch (err) {
     return { error: err };
   }
-}
+};
 
-async function editUserModel(editedUser) {
+const editUserModel = async (editedUser) => {
   try {
     const filter = { _id: editedUser._id };
-    console.log(editedUser);
     let edit = await User.findOneAndUpdate(filter, editedUser);
     return edit;
   } catch (err) {
     return { error: err };
   }
-}
+};
 
-async function getUserByEmail(email) {
+const deleteUserModel = async (id) => {
+  try {
+    const deleted = await User.findByIdAndDelete(id);
+    return deleted;
+  } catch (err) {
+    return { error: err };
+  }
+};
+
+const getUserByEmail = async (email) => {
   try {
     const queryResult = await User.find({ email: email });
     return queryResult;
   } catch {
     return { error: err };
   }
-}
+};
 
-async function getUserById(id) {
+const getUserById = async (id) => {
   try {
     const queryResult = await User.findById(id);
     return queryResult;
   } catch {
     return { error: err };
   }
-}
+};
 
 module.exports = {
   addUserModel,
   editUserModel,
+  deleteUserModel,
   getUserByEmail,
   getUserById,
 };

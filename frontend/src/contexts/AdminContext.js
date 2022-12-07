@@ -34,8 +34,19 @@ export function AdminContextProvider({ children }) {
     }
   };
 
+  const deleteUser = async (id) => {
+    try {
+      const res = await axios.delete(
+        `http://localhost:8080/admin/delete/${id}`
+      );
+      console.log(res);
+    } catch (err) {
+      return { error: err };
+    }
+  };
+
   return (
-    <AdminContext.Provider value={{ addUser, editUser }}>
+    <AdminContext.Provider value={{ addUser, editUser, deleteUser }}>
       {children}
     </AdminContext.Provider>
   );
