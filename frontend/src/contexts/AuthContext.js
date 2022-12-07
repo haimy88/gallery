@@ -32,6 +32,12 @@ export function AuthContextProvider({ children }) {
     }
   };
 
+  const logout = () => {
+    localStorage.removeItem("user");
+    setCurrentUser("");
+    // window.location.pathname = "/";
+  };
+
   const collectUsers = async () => {
     try {
       const userData = await axios.get("http://localhost:8080/auth/allusers");
@@ -45,7 +51,14 @@ export function AuthContextProvider({ children }) {
 
   return (
     <AuthContext.Provider
-      value={{ login, currentUser, collectUsers, allUsers, setAllUsers }}
+      value={{
+        login,
+        logout,
+        currentUser,
+        collectUsers,
+        allUsers,
+        setAllUsers,
+      }}
     >
       {" "}
       {children}

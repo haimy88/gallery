@@ -15,7 +15,7 @@ function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
-  const { currentUser } = useAuthContext();
+  const { currentUser, logout } = useAuthContext();
 
   return (
     <AppBar position="static">
@@ -58,6 +58,7 @@ function ResponsiveAppBar() {
             <Button
               sx={{ mr: 1, ml: 1, my: 2, color: "white", display: "block" }}
               href="/"
+              onClick={logout}
             >
               Logout
             </Button>
