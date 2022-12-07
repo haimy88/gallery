@@ -3,7 +3,6 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
@@ -14,21 +13,27 @@ import { useAdminContext } from "../contexts/AdminContext";
 
 const theme = createTheme();
 
-export default function SignUp() {
-  const { addUser } = useAdminContext();
+export default function AddUser({ existingUser }) {
+  const { addUser, editUser } = useAdminContext();
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    const newUser = {
+    const user = {
       email: data.get("email"),
       password: data.get("password"),
       repassword: data.get("repassword"),
       firstName: data.get("firstName"),
       lastName: data.get("lastName"),
       description: data.get("description"),
+      _id: existingUser._id,
     };
-    addUser(newUser);
+    Object.keys(user).forEach((key) => {
+      if (user[key] === "") {
+        delete user[key];
+      }
+    });
+    existingUser ? editUser(user) : addUser(user);
   };
 
   return (
@@ -46,7 +51,7 @@ export default function SignUp() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Add User
+            {existingUser ? "Edit User" : "Add User"}
           </Typography>
           <Box
             component="form"
@@ -64,6 +69,7 @@ export default function SignUp() {
                   id="firstName"
                   label="First Name"
                   autoFocus
+                  placeholder={existingUser.firstName}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -74,6 +80,7 @@ export default function SignUp() {
                   label="Last Name"
                   name="lastName"
                   autoComplete="family-name"
+                  placeholder={existingUser.lastName}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -84,6 +91,7 @@ export default function SignUp() {
                   label="Email Address"
                   name="email"
                   autoComplete="email"
+                  placeholder={existingUser.email}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -91,7 +99,7 @@ export default function SignUp() {
                   required
                   fullWidth
                   name="password"
-                  label="Password"
+                  label={existingUser ? "New Password" : "Password"}
                   type="password"
                   id="password"
                   autoComplete="new-password"
@@ -102,7 +110,9 @@ export default function SignUp() {
                   required
                   fullWidth
                   name="repassword"
-                  label="Retype Password"
+                  label={
+                    existingUser ? "Retype New Password" : "Retype Password"
+                  }
                   type="password"
                   id="repassword"
                   autoComplete="new-password"
@@ -117,6 +127,7 @@ export default function SignUp() {
                   type="description"
                   id="description"
                   autoComplete="description"
+                  placeholder={existingUser.description}
                 />
               </Grid>
             </Grid>
@@ -126,7 +137,7 @@ export default function SignUp() {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Add User
+              {existingUser ? "Edit User" : "Add User"}
             </Button>
           </Box>
         </Box>

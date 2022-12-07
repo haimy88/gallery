@@ -22,8 +22,20 @@ export function AdminContextProvider({ children }) {
     }
   };
 
+  const editUser = async (editedUser) => {
+    try {
+      const res = await axios.put(
+        "http://localhost:8080/admin/edit",
+        editedUser
+      );
+      console.log(res);
+    } catch (err) {
+      return { error: err };
+    }
+  };
+
   return (
-    <AdminContext.Provider value={{ addUser }}>
+    <AdminContext.Provider value={{ addUser, editUser }}>
       {children}
     </AdminContext.Provider>
   );

@@ -1,6 +1,6 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const { addUserModel } = require("../models/adminModel");
+const { addUserModel, editUserModel } = require("../models/adminModel");
 require("dotenv").config();
 
 async function addUser(req, res) {
@@ -15,6 +15,19 @@ async function addUser(req, res) {
   }
 }
 
+async function editUser(req, res) {
+  try {
+    const edit = editUserModel(req.body);
+    if (edit.error) {
+      throw new Error(edit.error);
+    }
+    res.status(200).send("User edited successfully");
+  } catch (err) {
+    res.status(500).send(err);
+  }
+}
+
 module.exports = {
   addUser,
+  editUser,
 };

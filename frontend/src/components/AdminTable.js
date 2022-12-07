@@ -74,6 +74,10 @@ export default function AdminTable() {
   };
 
   useEffect(() => {
+    console.log(existingUser);
+  }, [existingUser]);
+
+  useEffect(() => {
     if (!openPopup) setExistingUser(false);
   }, [openPopup]);
 

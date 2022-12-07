@@ -15,7 +15,7 @@ const login = (req, res) => {
             expiresIn: "24h",
           }
         );
-        res.send({
+        userClient = {
           id: user._id.toString(),
           email: user.email,
           firstName: user.firstName,
@@ -23,7 +23,8 @@ const login = (req, res) => {
           isAdmin: user.isAdmin,
           description: user.description,
           token,
-        });
+        };
+        res.send(userClient);
       } else {
         res.status(500).send("Incorrect Password");
         return;
