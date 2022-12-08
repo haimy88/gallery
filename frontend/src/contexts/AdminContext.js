@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import axios from "axios";
 
 const AdminContext = React.createContext();
@@ -13,11 +13,8 @@ export function AdminContextProvider({ children }) {
   const addUser = async (newUser) => {
     try {
       {
-        const res = await axios.post(
-          "http://localhost:8080/admin/add",
-          newUser
-        );
-        console.log(res);
+        const api = "http://localhost:8080/admin/add";
+        const res = await axios.post(api, newUser);
         return res.data;
       }
     } catch (err) {
@@ -27,10 +24,8 @@ export function AdminContextProvider({ children }) {
 
   const editUser = async (editedUser) => {
     try {
-      const res = await axios.put(
-        "http://localhost:8080/admin/edit",
-        editedUser
-      );
+      const api = "http://localhost:8080/admin/edit";
+      const res = await axios.put(api, editedUser);
       return res.data;
     } catch (err) {
       return { error: err };
@@ -39,10 +34,8 @@ export function AdminContextProvider({ children }) {
 
   const deleteUser = async (id) => {
     try {
-      const res = await axios.delete(
-        `http://localhost:8080/admin/delete/${id}`
-      );
-      console.log(res);
+      const api = `http://localhost:8080/admin/delete/${id}`;
+      const res = await axios.delete(api);
       return res.data;
     } catch (err) {
       return { error: err };
@@ -51,7 +44,8 @@ export function AdminContextProvider({ children }) {
 
   const collectUsersAdmin = async (id) => {
     try {
-      const userData = await axios.get("http://localhost:8080/admin/users");
+      const api = "http://localhost:8080/admin/users";
+      const userData = await axios.get(api);
       if (userData) {
         setAllUsersAdmin(userData.data);
       }

@@ -18,10 +18,8 @@ export function AuthContextProvider({ children }) {
 
   const login = async (user) => {
     try {
-      const existingUser = await axios.post(
-        "http://localhost:8080/auth/login",
-        user
-      );
+      const api = "http://localhost:8080/auth/login";
+      const existingUser = await axios.post(api, user);
       if (existingUser) {
         localStorage.setItem("user", JSON.stringify(existingUser.data));
         setCurrentUser(existingUser.data);
@@ -35,12 +33,12 @@ export function AuthContextProvider({ children }) {
   const logout = () => {
     localStorage.removeItem("user");
     setCurrentUser("");
-    // window.location.pathname = "/";
   };
 
   const collectUsers = async () => {
     try {
-      const userData = await axios.get("http://localhost:8080/auth/allusers");
+      const api = "http://localhost:8080/auth/allusers";
+      const userData = await axios.get(api);
       if (userData) {
         setAllUsers(userData.data);
       }
