@@ -25,6 +25,8 @@ export default function AddUser({ existingUser }) {
 
   const handleSubmit = async (event) => {
     setIsLoading(true);
+    setError();
+    setSuccess();
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const user = {
@@ -43,10 +45,12 @@ export default function AddUser({ existingUser }) {
     });
     if (existingUser) {
       const message = await editUser(user);
-      message.error ? setError(message.error.message) : setSuccess(message);
+      message.error
+        ? setError(message.error.response.data)
+        : setSuccess(message);
     } else {
       const res = await addUser(user);
-      res.error ? setError(res.error.message) : setSuccess(res);
+      res.error ? setError(res.error.response.data) : setSuccess(res);
     }
     setIsLoading(false);
   };
