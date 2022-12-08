@@ -54,8 +54,10 @@ export default function AdminTable() {
         else
           return items.filter(
             (x) =>
-              x.first_name.toLowerCase().includes(target.value) ||
-              x.last_name.toLowerCase().includes(target.value)
+              x.firstName.toLowerCase().includes(target.value) ||
+              x.lastName.toLowerCase().includes(target.value) ||
+              x.description.toLowerCase().includes(target.value) ||
+              x.email.toLowerCase().includes(target.value)
           );
       },
     });

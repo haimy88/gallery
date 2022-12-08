@@ -10,12 +10,19 @@ export function useAdminContext() {
 export function AdminContextProvider({ children }) {
   const [allUsersAdmin, setAllUsersAdmin] = useState([]);
 
-  const user = JSON.parse(localStorage.getItem("user"));
-  const token = user.token;
-  const headersConfig = { headers: { Authorization: "Bearer " + token } };
+  const getTokenFromStorage = () => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    const token = user.token;
+    const headersConfig = {
+      headers: { Authorization: "Bearer " + token },
+    };
+    console.log(headersConfig);
+    return headersConfig;
+  };
 
   const addUser = async (newUser) => {
     try {
+      const headersConfig = getTokenFromStorage();
       const api = "http://localhost:8080/admin/add";
       const res = await axios.post(api, newUser, headersConfig);
       return res.data;
@@ -26,6 +33,7 @@ export function AdminContextProvider({ children }) {
 
   const editUser = async (editedUser) => {
     try {
+      const headersConfig = getTokenFromStorage();
       const api = "http://localhost:8080/admin/edit";
       const res = await axios.put(api, editedUser, headersConfig);
       return res.data;
@@ -36,6 +44,7 @@ export function AdminContextProvider({ children }) {
 
   const deleteUser = async (id) => {
     try {
+      const headersConfig = getTokenFromStorage();
       const api = `http://localhost:8080/admin/delete/${id}`;
       const res = await axios.delete(api, headersConfig);
       return res.data;
@@ -46,6 +55,7 @@ export function AdminContextProvider({ children }) {
 
   const collectUsersAdmin = async (id) => {
     try {
+      const headersConfig = getTokenFromStorage();
       const api = "http://localhost:8080/admin/users";
       const userData = await axios.get(api, headersConfig);
       if (userData) {

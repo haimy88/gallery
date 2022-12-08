@@ -37,8 +37,13 @@ export function AuthContextProvider({ children }) {
 
   const collectUsers = async () => {
     try {
+      const user = JSON.parse(localStorage.getItem("user"));
+      const token = user.token;
+      const headersConfig = {
+        headers: { Authorization: "Bearer " + token },
+      };
       const api = "http://localhost:8080/auth/allusers";
-      const userData = await axios.get(api);
+      const userData = await axios.get(api, headersConfig);
       if (userData) {
         setAllUsers(userData.data);
       }
