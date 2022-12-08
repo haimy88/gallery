@@ -1,4 +1,3 @@
-const bcrypt = require("bcrypt");
 const { getUserByEmail } = require("../models/adminModel");
 
 const isExistingUser = async (req, res, next) => {
