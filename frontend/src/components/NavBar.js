@@ -8,13 +8,7 @@ import Button from "@mui/material/Button";
 import AdbIcon from "@mui/icons-material/Adb";
 import { useAuthContext } from "../contexts/AuthContext";
 
-const pages = ["Dashboard", "Logout"];
-const settings = ["Logout"];
-
 function ResponsiveAppBar() {
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
-
   const { currentUser, logout } = useAuthContext();
 
   return (

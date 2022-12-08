@@ -1,12 +1,9 @@
 import React from "react";
 import { Dialog, DialogContent, Button, Box } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import PersonIcon from "@mui/icons-material/Person";
 
 export default function Popup(props) {
-  const { title, children, openPopup, setOpenPopup } = props;
-
-  const avatarStyle = { backgroundColor: "#1bbd7e" };
+  const { children, openPopup, setOpenPopup } = props;
 
   return (
     <Dialog open={openPopup}>

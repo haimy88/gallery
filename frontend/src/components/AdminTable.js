@@ -1,6 +1,6 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import { UseTable } from "./UseTable";
+import { UseTable } from "../utils/UseTable";
 import {
   TableBody,
   TableRow,

@@ -12,11 +12,9 @@ export function AdminContextProvider({ children }) {
 
   const addUser = async (newUser) => {
     try {
-      {
-        const api = "http://localhost:8080/admin/add";
-        const res = await axios.post(api, newUser);
-        return res.data;
-      }
+      const api = "http://localhost:8080/admin/add";
+      const res = await axios.post(api, newUser);
+      return res.data;
     } catch (err) {
       return { error: err };
     }
