@@ -8,10 +8,12 @@ const {
 } = require("../middleware/adminMiddleware");
 const { validateBody } = require("../middleware/validateBody");
 const { validateEmail } = require("../middleware/validateEmail");
+const { validateToken } = require("../middleware/validateToken");
 const { newUserSchema } = require("../data/validationschemas");
 
 router.post(
   "/add",
+  validateToken,
   validateBody(newUserSchema),
   validateEmail,
   isNewUser,
@@ -22,14 +24,15 @@ router.post(
 
 router.put(
   "/edit",
+  validateToken,
   validateEmail,
   passwordsMatch,
   encryptPassword,
   AdminController.editUser
 );
 
-router.delete("/delete/:id", AdminController.deleteUser);
+router.delete("/delete/:id", validateToken, AdminController.deleteUser);
 
-router.get("/users", AdminController.getAllUsersAdmin);
+router.get("/users", validateToken, AdminController.getAllUsersAdmin);
 
 module.exports = router;

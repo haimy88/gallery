@@ -9,7 +9,6 @@ const validateToken = (req, res, next) => {
       res.status(401).send("Invalid Token");
       return;
     }
-    req.body.userId = decoded.id;
     next();
   });
 };

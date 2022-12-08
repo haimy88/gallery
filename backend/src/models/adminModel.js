@@ -58,7 +58,6 @@ const getAllUsersAdminModel = async () => {
       };
       return displayedUser;
     });
-    console.log(displayUsers);
     return displayUsers;
   } catch (err) {
     return { error: err };

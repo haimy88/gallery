@@ -32,7 +32,6 @@ const editUser = async (req, res) => {
 
 const deleteUser = async (req, res) => {
   try {
-    console.log(req.params);
     const deleted = deleteUserModel(req.params.id);
     if (deleted.error) {
       throw new Error(deleted.error);
